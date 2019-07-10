@@ -12,14 +12,16 @@ import java.util.List;
 public class TimeEntryController {
 
     TimeEntryRepository timeEntryRepository;
+    TimeEntryMapper timeEntryMapper = new TimeEntryMapper();
 
     public TimeEntryController(TimeEntryRepository timeEntryRepository) {
         this.timeEntryRepository = timeEntryRepository;
     }
 
     @PostMapping()
-    public ResponseEntity<TimeEntry> create(@RequestBody TimeEntry timeEntryToCreate) {
-        return new ResponseEntity<TimeEntry>(timeEntryRepository.create(timeEntryToCreate), HttpStatus.CREATED);
+    public ResponseEntity<TimeEntry> create(@RequestBody TimeEntry2 timeEntryToCreate) {
+            TimeEntry timeEntry1ToCreate = timeEntryMapper.map(timeEntryToCreate);
+            return new ResponseEntity<TimeEntry>(timeEntryRepository.create(timeEntry1ToCreate), HttpStatus.CREATED);
     }
 
     @GetMapping("/{timeEntryId}")

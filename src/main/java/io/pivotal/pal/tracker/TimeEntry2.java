@@ -3,7 +3,7 @@ package io.pivotal.pal.tracker;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class TimeEntry {
+public class TimeEntry2 {
 
     private long id;
 
@@ -17,7 +17,7 @@ public class TimeEntry {
         return userId;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -26,26 +26,27 @@ public class TimeEntry {
     }
 
     private long userId;
-    private LocalDate date;
+    private String date;
     private int hours;
 
-    public TimeEntry(long projectId, long userId, LocalDate date, int hours) {
+    public TimeEntry2(long projectId, long userId, String date, int hours) {
         this.id = 1;
         this.projectId = projectId;
         this.userId = userId;
         this.date = date;
         this.hours = hours;
     }
-    //timeEntryId, projectId, userId, LocalDate.parse("2017-01-08"), 8
-    public TimeEntry(long timeEntryId, long projectId, long userId, LocalDate date, int hours) {
-        this.projectId = projectId;
-        this.id = timeEntryId;
-        this.userId = userId;
-        this.date = date;
-        this.hours = hours;
+
+    public TimeEntry2(TimeEntry timeEntry) {
+        this.id = timeEntry.getId();
+        this.projectId = timeEntry.getProjectId();
+        this.userId = timeEntry.getUserId();
+        this.date = timeEntry.getDate().toString();
+        this.hours = timeEntry.getHours();
     }
 
-    public TimeEntry() {
+
+    public TimeEntry2() {
 
     }
 
@@ -67,7 +68,7 @@ public class TimeEntry {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        TimeEntry timeEntry = (TimeEntry) o;
+        TimeEntry2 timeEntry = (TimeEntry2) o;
         return id == timeEntry.id &&
                 projectId == timeEntry.projectId &&
                 userId == timeEntry.userId &&

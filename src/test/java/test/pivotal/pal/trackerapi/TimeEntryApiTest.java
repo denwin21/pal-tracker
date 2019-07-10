@@ -3,6 +3,8 @@ package test.pivotal.pal.trackerapi;
 import com.jayway.jsonpath.DocumentContext;
 import io.pivotal.pal.tracker.PalTrackerApplication;
 import io.pivotal.pal.tracker.TimeEntry;
+import io.pivotal.pal.tracker.TimeEntry2;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
 
 import static com.jayway.jsonpath.JsonPath.parse;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,6 +34,12 @@ public class TimeEntryApiTest {
     private final long projectId = 123L;
     private final long userId = 456L;
     private TimeEntry timeEntry = new TimeEntry(projectId, userId, LocalDate.parse("2017-01-08"), 8);
+    private TimeEntry2 timeEntry2 = new TimeEntry2(projectId, userId, "2017-31-08", 8);
+
+    @Before
+    public void cleanup(){
+
+    }
 
     @Test
     public void testCreate() throws Exception {
@@ -44,6 +53,22 @@ public class TimeEntryApiTest {
         assertThat(createJson.read("$.projectId", Long.class)).isEqualTo(projectId);
         assertThat(createJson.read("$.userId", Long.class)).isEqualTo(userId);
         assertThat(createJson.read("$.date", String.class)).isEqualTo("2017-01-08");
+        assertThat(createJson.read("$.hours", Long.class)).isEqualTo(8);
+    }
+
+
+    @Test
+    public void testCreateAmericanDate() throws Exception {
+      ResponseEntity<String> createResponse = restTemplate.postForEntity("/time-entries", timeEntry2, String.class);
+
+
+        assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+
+        DocumentContext createJson = parse(createResponse.getBody());
+        assertThat(createJson.read("$.id", Long.class)).isGreaterThan(0);
+        assertThat(createJson.read("$.projectId", Long.class)).isEqualTo(projectId);
+        assertThat(createJson.read("$.userId", Long.class)).isEqualTo(userId);
+        assertThat(createJson.read("$.date", String.class)).isEqualTo("2017-08-31");
         assertThat(createJson.read("$.hours", Long.class)).isEqualTo(8);
     }
 
