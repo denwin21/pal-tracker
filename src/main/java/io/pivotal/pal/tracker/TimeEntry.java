@@ -6,25 +6,7 @@ import java.util.Objects;
 public class TimeEntry {
 
     private long id;
-
-    public long getProjectId() {
-        return projectId;
-    }
-
     private long projectId;
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public int getHours() {
-        return hours;
-    }
-
     private long userId;
     private LocalDate date;
     private int hours;
@@ -36,6 +18,7 @@ public class TimeEntry {
         this.date = date;
         this.hours = hours;
     }
+
     //timeEntryId, projectId, userId, LocalDate.parse("2017-01-08"), 8
     public TimeEntry(long timeEntryId, long projectId, long userId, LocalDate date, int hours) {
         this.projectId = projectId;
@@ -50,15 +33,28 @@ public class TimeEntry {
 
     }
 
-
     public Long getId() {
         return this.id;
     }
 
-
-
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getProjectId() {
+        return projectId;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public int getHours() {
+        return hours;
     }
 
     @Override
