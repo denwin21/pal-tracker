@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -37,10 +38,10 @@ public class JdbcTimeEntryRepositoryTest {
     @Test
     public void createInsertsATimeEntryRecord() {
         TimeEntry newTimeEntry = new TimeEntry(123, 321, LocalDate.parse("2017-01-09"), 8);
+
         TimeEntry entry = subject.create(newTimeEntry);
 
         Map<String, Object> foundEntry = jdbcTemplate.queryForMap("Select * from time_entries where id = ?", entry.getId());
-
         assertThat(foundEntry.get("id")).isEqualTo(entry.getId());
         assertThat(foundEntry.get("project_id")).isEqualTo(123L);
         assertThat(foundEntry.get("user_id")).isEqualTo(321L);
