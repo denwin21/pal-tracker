@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.concurrent.Delayed;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/time-entries")
@@ -42,8 +44,9 @@ public class TimeEntryController {
 
 
     @GetMapping()
-    public ResponseEntity<List<TimeEntry>> list() {
+    public ResponseEntity<List<TimeEntry>> list() throws Exception {
         actionCounter.increment();
+        TimeUnit.SECONDS.sleep(2);
         return new ResponseEntity<List<TimeEntry>>(timeEntryRepository.list(), HttpStatus.OK);
     }
 
