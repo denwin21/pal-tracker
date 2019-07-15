@@ -44,9 +44,13 @@ public class TimeEntryController {
 
 
     @GetMapping()
-    public ResponseEntity<List<TimeEntry>> list() throws Exception {
+    public ResponseEntity<List<TimeEntry>> list() {
         actionCounter.increment();
-        TimeUnit.SECONDS.sleep(2);
+        try {
+
+            TimeUnit.SECONDS.sleep(2);
+        }
+        catch(Exception ex){}
         return new ResponseEntity<List<TimeEntry>>(timeEntryRepository.list(), HttpStatus.OK);
     }
 
