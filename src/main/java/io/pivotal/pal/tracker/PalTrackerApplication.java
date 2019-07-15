@@ -1,5 +1,6 @@
 package io.pivotal.pal.tracker;
 
+import io.micrometer.core.instrument.DistributionSummary;
 import io.micrometer.core.instrument.Meter;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.boot.SpringApplication;

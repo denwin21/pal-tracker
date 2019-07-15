@@ -35,7 +35,6 @@ public class HealthApiTest {
         restTemplate = new TestRestTemplate(builder);
     }
 
-    @Ignore
     @Test
     public void healthTest() {
         ResponseEntity<String> response = this.restTemplate.getForEntity("/actuator/health", String.class);
